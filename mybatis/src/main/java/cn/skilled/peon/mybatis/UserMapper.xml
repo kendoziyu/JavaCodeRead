@@ -1,0 +1,24 @@
+<mapper namespace="cn.skilled.peon.mybatis.UserMapper">
+
+    <update id="editUser" parameterType="cn.skilled.peon.mybatis.beans.User">
+        update users set
+        name=#{name}
+        <if test="age!=null">
+            ,
+            age=#{age}
+        </if>
+        <if test="sex!=null">
+            ,
+            sex=#{sex}
+        </if>
+        <if test="phoneNumber!=null">
+            ,
+            phone_number=#{phoneNumber}
+        </if>
+        <if test="email!=null">
+            ,
+            email=#{email}
+        </if>
+        where id=#{id}
+    </update>
+</mapper>
