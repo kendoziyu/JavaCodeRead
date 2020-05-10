@@ -1,6 +1,6 @@
 package cn.skilled.peon.proxy;
 
-import sun.net.www.protocol.http.HttpURLConnection;
+import java.net.HttpURLConnection;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import java.util.Map;
  * @author: skilled-peon <br>
  * @date: 2020/5/10 0010 <br>
  */
-public class ProxyHttpUrlConnection extends java.net.HttpURLConnection {
+public class ProxyHttpUrlConnection extends HttpURLConnection {
 
     private HttpURLConnection target;
 
@@ -26,14 +26,17 @@ public class ProxyHttpUrlConnection extends java.net.HttpURLConnection {
         this.target = target;
     }
 
+    @Override
     public void disconnect() {
         target.disconnect();
     }
 
+    @Override
     public boolean usingProxy() {
         return target.usingProxy();
     }
 
+    @Override
     public void connect() throws IOException {
         long begin = System.currentTimeMillis();
         target.connect();
