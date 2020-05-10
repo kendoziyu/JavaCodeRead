@@ -7,14 +7,14 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BasicTest {
+public class MyBatisTest {
 
     private SqlSessionFactory sqlSessionFactory;
 
     @Before
     public void init() {
         SqlSessionFactoryBuilder factoryBuilder = new SqlSessionFactoryBuilder();
-        sqlSessionFactory = factoryBuilder.build(BasicTest.class.getResourceAsStream("/mybatis-config.xml"));
+        sqlSessionFactory = factoryBuilder.build(MyBatisTest.class.getResourceAsStream("/mybatis-config.xml"));
     }
 
     @Test
