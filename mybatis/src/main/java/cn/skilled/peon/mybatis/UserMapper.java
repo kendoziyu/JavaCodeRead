@@ -12,4 +12,6 @@ public interface UserMapper {
 
     int editUser(User user);
 
+    @Update("update  users set name=#{arg1} where id=#{arg0}")
+    int setName(Integer id, String name);
 }
