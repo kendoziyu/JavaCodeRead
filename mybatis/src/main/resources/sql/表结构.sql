@@ -40,3 +40,13 @@ CREATE TABLE `greetings` (
     `words` VARCHAR(255) COLLATE utf8_bin NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+DROP TABLE IF EXISTS `blog`;
+CREATE TABLE `blog` (
+    `blog_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `blog_name` VARCHAR(255) COLLATE utf8_bin NOT NULL,
+    `blog_state` INT(1) NOT NULL DEFAULT 0,
+    `add_time` TIMESTAMP NOT NULL,
+    `update_time` TIMESTAMP NULL,
+    PRIMARY KEY (`blog_id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
