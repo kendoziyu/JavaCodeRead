@@ -8,7 +8,7 @@
         update users set
         name=#{name}
         <if test="age!=null">
-            ,ad
+            ,
             age=#{age}
         </if>
         <if test="sex!=null">
