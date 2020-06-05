@@ -1,8 +1,9 @@
 package cn.skilled.peon.mybatis.beans;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
 
     private Integer id;
     private String name;
