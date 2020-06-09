@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.skilled.peon.mybatis.UserMapper">
 
+    <select id="selectByid2" useCache="true" resultType="cn.skilled.peon.mybatis.beans.User">
+        select * from users where id=#{arg0}
+    </select>
+
     <update id="editUser" parameterType="cn.skilled.peon.mybatis.beans.User">
         update users set
         name=#{name}
