@@ -63,6 +63,7 @@ public class MetaObjectTest {
         MetaObject metaObject = MetaObject.forObject(map, this.objectFactory, this.objectWrapperFactory, this.reflectorFactory);
         metaObject.setValue("1", animal);
         Assert.assertEquals(map.get("1").getName(), "monkey");
+        Assert.assertEquals(metaObject.getValue("1.name"), "monkey");
     }
 
     @Test
