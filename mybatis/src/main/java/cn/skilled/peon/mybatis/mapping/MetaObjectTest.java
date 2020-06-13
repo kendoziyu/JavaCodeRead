@@ -11,6 +11,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,16 @@ public class MetaObjectTest {
         this.objectFactory = new DefaultObjectFactory();
         this.objectWrapperFactory = new DefaultObjectWrapperFactory();
         this.reflectorFactory = new DefaultReflectorFactory();
+    }
+
+    @Test
+    public void stupidInvoke() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Object animal = new Animal();
+        Method setName = animal.getClass().getDeclaredMethod("setName", String.class);
+        setName.invoke(animal, "hello world");
+        Method getName = animal.getClass().getDeclaredMethod("getName");
+        Object name = getName.invoke(animal);
+        System.out.println(name);
     }
 
     @Test
