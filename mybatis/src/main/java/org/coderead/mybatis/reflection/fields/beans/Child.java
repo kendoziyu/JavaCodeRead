@@ -11,4 +11,5 @@ public class Child extends Parent{
     protected double wealth;
     private int age;
     private Integer studentNo;
+    Object[] objArray;
 }
