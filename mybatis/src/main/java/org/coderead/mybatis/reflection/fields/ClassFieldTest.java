@@ -1,7 +1,8 @@
 package org.coderead.mybatis.reflection.fields;
 
 import org.coderead.mybatis.reflection.fields.beans.Child;
-import org.coderead.mybatis.reflection.fields.beans.Empty;
+import org.coderead.mybatis.reflection.fields.beans.Constants;
+import org.coderead.mybatis.reflection.fields.beans.NoFieldsClass;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,34 +16,44 @@ import java.lang.reflect.Field;
  */
 public class ClassFieldTest {
 
-    @Test
-    public void test0() {
-        Field[] fields = Child.class.getFields();
-        printFields(fields);
-        System.out.println("===========================");
-        Field[] declaredFields = Child.class.getDeclaredFields();
-        printFields(declaredFields);
-    }
-
+    /**
+     * {@link Class#getFields()} 只获取 {@code public} 公有成员变量，包含 超类的公有成员变量
+     * {@link Class#getDeclaredFields()} 获取 当前类的 所有成员变量，不包含 超类的公有成员变量
+     */
     @Test
     public void test1() {
-        // Class对象描述的是数组类型
-        Field[] arrayFields = Object[].class.getFields();
-        Assert.assertEquals(arrayFields.length, 0);
-        Field[] arrayDeclaredFields = Object[].class.getDeclaredFields();
-        Assert.assertEquals(arrayDeclaredFields.length, 0);
+        System.out.println("----------getFields()----------");
+        printFields(Child.class.getFields());
+        System.out.println("----------getDeclaredFields()----------");
+        printFields(Child.class.getDeclaredFields());
+    }
 
-        // Class对象描述的是基本类型
-        Field[] intFields = int.class.getFields();
-        Assert.assertEquals(intFields.length, 0);
-        Field[] intDeclaredFields = int.class.getFields();
-        Assert.assertEquals(intDeclaredFields.length, 0);
-
-        // 类中没有成员变量
-        Field[] fields = Empty.class.getFields();
-        Assert.assertEquals(fields.length, 0);
-        Field[] declaredFields = Empty.class.getDeclaredFields();
-        Assert.assertEquals(declaredFields.length, 0);
+    /**
+     * 没有域的情况：
+     * 1. 原始类型
+     * 2. 数组类型
+     * 3. void
+     * 4. 类或者接口中没有声明域
+     *
+     * 假如有一个 域不是 公有 {@code public} 的，那么 {@link Class#getFields()} 获取不到， 但是 {@link Class#getDeclaredFields()} 可以获取到
+     */
+    @Test
+    public void test2() {
+        // 数组对象的域 个数 == 0
+        Assert.assertEquals(Object[].class.getFields().length, 0);
+        Assert.assertEquals(Object[].class.getDeclaredFields().length, 0);
+        // 基本类型的域 个数 == 0
+        Assert.assertEquals(int.class.getFields().length, 0);
+        Assert.assertEquals(int.class.getDeclaredFields().length, 0);
+        // 类或者接口中没有域，则 域个数 == 0
+        Assert.assertEquals(NoFieldsClass.class.getFields().length, 0);
+        Assert.assertEquals(NoFieldsClass.class.getDeclaredFields().length, 0);
+        // void 没有域
+        Assert.assertEquals(void.class.getFields().length, 0);
+        Assert.assertEquals(void.class.getDeclaredFields().length, 0);
+        // 相反地，接口中如果定义了域，则 域个数 > 0
+        Assert.assertTrue(Constants.class.getFields().length > 0);
+        Assert.assertTrue(Constants.class.getDeclaredFields().length > 0);
     }
 
     private void printFields(Field[] fields) {

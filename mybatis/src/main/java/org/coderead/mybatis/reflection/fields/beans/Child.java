@@ -7,6 +7,7 @@ package org.coderead.mybatis.reflection.fields.beans;
  * @date: 2020/6/14 0014 <br>
  */
 public class Child extends Parent{
+    public final static String TAG = "Child";
     public String name;
     protected double wealth;
     private int age;
