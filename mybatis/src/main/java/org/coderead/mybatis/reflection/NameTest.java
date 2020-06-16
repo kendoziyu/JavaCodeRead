@@ -1,5 +1,6 @@
 package org.coderead.mybatis.reflection;
 
+import org.coderead.mybatis.reflection.enclosingclass.TopLevelClass;
 import org.junit.Test;
 
 /**
@@ -41,40 +42,8 @@ public class NameTest {
         System.out.println(Inner1.Inner2.Inner3.class.getCanonicalName());
     }
 
-    /**
-     * anonymous classes
-     * 匿名内部类
-     */
     @Test
-    public void test3() {
-        Runnable test3 = new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        };
-
-        System.out.println(test3.getClass().getName()); // org.coderead.mybatis.reflection.NameTest$1
-        System.out.println(test3.getClass().getSimpleName()); // ""
-        System.out.println(test3.getClass().getCanonicalName()); // null
-    }
-
-    /**
-     * local classes
-     */
-    @Test
-    public void test4() {
-        class Mega {
-
-        }
-
-        System.out.println(Mega.class.getName()); // org.coderead.mybatis.reflection.NameTest$1Mega
-        System.out.println(Mega.class.getSimpleName()); // Mega
-        System.out.println(Mega.class.getCanonicalName()); // null
-    }
-
-    @Test
-    public void test5() throws ClassNotFoundException {
+    public void test3() throws ClassNotFoundException {
         // boolean[] 基础类型数组
         Class booleanArray = Class.forName("[Z");
         System.out.println(booleanArray.getName());
@@ -89,11 +58,97 @@ public class NameTest {
      * @throws ClassNotFoundException
      */
     @Test
-    public void test6() throws ClassNotFoundException {
+    public void test4() throws ClassNotFoundException {
         Class booleanArray = Class.forName("[Z");
         Class booleanArray2 = Class.forName("[Z");
         System.out.println(booleanArray.equals(booleanArray2)); // true
     }
 
+    /**
+     * 本地类和匿名类
+     */
+    @Test
+    public void test5() {
+        TopLevelClass top = new TopLevelClass(10);
+        Class localClass = top.buildLocalClass().getClass();
+        System.out.println("------------Local Class------------");
+        printAllNames(localClass);
+
+        System.out.println("----------Anonymous Class----------");
+        Class anonymousClass = top.buildAnonymousClass().getClass();
+        printAllNames(anonymousClass);
+    }
+
+    /**
+     * 嵌套类和内部类
+     */
+    @Test
+    public void test6() {
+        // 嵌套类
+        Object nested = new TopLevelClass.NestedClass();
+        Class nestedClass = nested.getClass();
+        printAllNames(nestedClass);
+
+        // 内部类
+        TopLevelClass top = new TopLevelClass(100);
+        Object inner = top.new InnerClass();
+        Class innerClass = inner.getClass();
+        printAllNames(innerClass);
+    }
+
+    @Test
+    public void test7() {
+        // 嵌套类
+        Object nested = new TopLevelClass.NestedClass();
+        Class nestedClass = nested.getClass();
+        printClasses(nestedClass);
+
+        // 顶级类
+        TopLevelClass top = new TopLevelClass(100);
+        printClasses(top.getClass());
+
+        // 内部类
+        Object inner = top.new InnerClass();
+        Class innerClass = inner.getClass();
+        printClasses(innerClass);
+    }
+
+    /**
+     * 本地类和匿名类
+     */
+    @Test
+    public void test8() {
+        TopLevelClass top = new TopLevelClass(10);
+        Class localClass = top.buildLocalClass().getClass();
+        System.out.println("------------Local Class------------");
+        printClasses(localClass);
+
+        System.out.println("----------Anonymous Class----------");
+        Class anonymousClass = top.buildAnonymousClass().getClass();
+        printClasses(anonymousClass);
+    }
+
+    /**
+     * 这个测试的结果和上一个测试其实是一样的,
+     * {@link Class#getEnclosingClass()} 可以在 Local Class 和 Anonymous Class 中获取到 类
+     * 但是， {@link Class#getDeclaringClass()} 在 Local Class 和 Anonymous Class 中取到的是 null
+     */
+    @Test
+    public void test9() {
+        TopLevelClass top = new TopLevelClass(9);
+        Runnable runnable = (Runnable) top.buildAnonymousClass();
+        runnable.run();
+    }
+
+    private void printAllNames(Class cls) {
+        System.out.println(cls.getName());
+        System.out.println(cls.getCanonicalName());
+        System.out.println(cls.getSimpleName());
+    }
+
+    private void printClasses(Class cls) {
+        System.out.println("EnclosingClass: " + cls.getEnclosingClass());
+        System.out.println("DeclaringClass: " + cls.getDeclaringClass());
+    }
 
 }
