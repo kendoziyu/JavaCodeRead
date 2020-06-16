@@ -33,6 +33,32 @@ public class NameTest {
         // 匿名内部类
         System.out.println(test3.getClass().getCanonicalName());
     }
+
+    @Test
+    public void test4() throws ClassNotFoundException {
+        // boolean[] 基础类型数组
+        Class booleanArray = Class.forName("[Z");
+        System.out.println(booleanArray.getName());
+        // Boolean[] 数组
+        Class booleanArray2 = Class.forName("[Ljava.lang.Boolean;");
+        System.out.println(booleanArray2.getName());
+        System.out.println(booleanArray.equals(booleanArray2));
+    }
+
+    /**
+     * 使用相同的 {@link ClassLoader} 加载的类对象是同一个
+     * @throws ClassNotFoundException
+     */
+    @Test
+    public void test5() throws ClassNotFoundException {
+        // boolean[] 基础类型数组
+        Class booleanArray = Class.forName("[Z");
+        System.out.println(booleanArray.getName());
+        // Boolean[] 数组
+        Class booleanArray2 = Class.forName("[Z");
+        System.out.println(booleanArray.equals(booleanArray2));
+    }
+
     class Inner1 {
         class Inner2 {
             class Inner3 {

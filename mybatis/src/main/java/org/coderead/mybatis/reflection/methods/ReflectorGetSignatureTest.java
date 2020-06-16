@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
  * @author: skilled-peon <br>
  * @date: 2020/6/15 0015 <br>
  */
-public class ReflectorTest {
+public class ReflectorGetSignatureTest {
 
     @Test
     public void test1() {
@@ -34,17 +34,6 @@ public class ReflectorTest {
         printMethods(methods);
         // 内部类
         System.out.println(ReturnTypes.inner.class.getName());
-    }
-
-    @Test
-    public void test4() throws ClassNotFoundException {
-        // boolean[] 基础类型数组
-        Class booleanArray = Class.forName("[Z");
-        System.out.println(booleanArray.getName());
-        // Boolean[] 数组
-        Class booleanArray2 = Class.forName("[Ljava.lang.Boolean;");
-        System.out.println(booleanArray2.getName());
-        System.out.println(booleanArray.equals(booleanArray2));
     }
 
     private void printMethods(Method[] methods) {
