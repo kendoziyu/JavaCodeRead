@@ -10,6 +10,9 @@ import org.junit.Test;
  */
 public class NameTest {
 
+    /**
+     * 数组
+     */
     @Test
     public void test1() {
         String[][][] array = new String[0][][];
@@ -17,11 +20,31 @@ public class NameTest {
         System.out.println(array.getClass().getCanonicalName());
     }
 
+    class Inner1 {
+        class Inner2 {
+            class Inner3 {
+
+            }
+        }
+    }
+
+    /**
+     * 成员内部类
+     */
     @Test
     public void test2() {
+        // org.coderead.mybatis.reflection.NameTest$Inner1$Inner2$Inner3
+        System.out.println(Inner1.Inner2.Inner3.class.getName());
+        // Inner3
+        System.out.println(Inner1.Inner2.Inner3.class.getSimpleName());
+        // org.coderead.mybatis.reflection.NameTest.Inner1.Inner2.Inner3
         System.out.println(Inner1.Inner2.Inner3.class.getCanonicalName());
     }
 
+    /**
+     * anonymous classes
+     * 匿名内部类
+     */
     @Test
     public void test3() {
         Runnable test3 = new Runnable() {
@@ -30,12 +53,28 @@ public class NameTest {
 
             }
         };
-        // 匿名内部类
-        System.out.println(test3.getClass().getCanonicalName());
+
+        System.out.println(test3.getClass().getName()); // org.coderead.mybatis.reflection.NameTest$1
+        System.out.println(test3.getClass().getSimpleName()); // ""
+        System.out.println(test3.getClass().getCanonicalName()); // null
+    }
+
+    /**
+     * local classes
+     */
+    @Test
+    public void test4() {
+        class Mega {
+
+        }
+
+        System.out.println(Mega.class.getName()); // org.coderead.mybatis.reflection.NameTest$1Mega
+        System.out.println(Mega.class.getSimpleName()); // Mega
+        System.out.println(Mega.class.getCanonicalName()); // null
     }
 
     @Test
-    public void test4() throws ClassNotFoundException {
+    public void test5() throws ClassNotFoundException {
         // boolean[] 基础类型数组
         Class booleanArray = Class.forName("[Z");
         System.out.println(booleanArray.getName());
@@ -50,20 +89,11 @@ public class NameTest {
      * @throws ClassNotFoundException
      */
     @Test
-    public void test5() throws ClassNotFoundException {
-        // boolean[] 基础类型数组
+    public void test6() throws ClassNotFoundException {
         Class booleanArray = Class.forName("[Z");
-        System.out.println(booleanArray.getName());
-        // Boolean[] 数组
         Class booleanArray2 = Class.forName("[Z");
-        System.out.println(booleanArray.equals(booleanArray2));
+        System.out.println(booleanArray.equals(booleanArray2)); // true
     }
 
-    class Inner1 {
-        class Inner2 {
-            class Inner3 {
 
-            }
-        }
-    }
 }
