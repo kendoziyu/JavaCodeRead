@@ -7,6 +7,8 @@ import org.coderead.mybatis.reflection.relationship.beans.SuperInterface;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.Type;
+
 public class ClassRelationshipTest {
 
     /**
@@ -43,5 +45,16 @@ public class ClassRelationshipTest {
     @Test
     public void test4() {
         Assert.assertTrue(Object.class.isAssignableFrom(SubInterface.class));
+        Assert.assertTrue(SuperInterface.class.isAssignableFrom(SubClass.class));
+    }
+
+    @Test
+    public void test5() {
+        for (Class<?> anInterface : SubClass.class.getInterfaces()) {
+            System.out.println(anInterface.getName());
+        }
+        for (Type genericInterface : SubClass.class.getGenericInterfaces()) {
+            System.out.println(genericInterface.getTypeName());
+        }
     }
 }
