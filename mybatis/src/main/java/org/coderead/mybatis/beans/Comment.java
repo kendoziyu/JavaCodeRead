@@ -57,4 +57,15 @@ public class Comment implements Serializable {
     public void setBlog(Blog blog) {
         this.blog = blog;
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id='" + id + '\'' +
+                ", blogId=" + blogId +
+                ", body='" + body + '\'' +
+                ", user=" + user +
+                ", blog=" + blog +
+                '}';
+    }
 }

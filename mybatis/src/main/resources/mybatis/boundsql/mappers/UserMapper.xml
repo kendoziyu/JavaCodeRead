@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.coderead.mybatis.boundsql.mappers.UserMapper">
+    <select id="getUser" parameterType="org.coderead.mybatis.beans.User" resultType="org.coderead.mybatis.beans.User">
+        select * from user
+        <where>
+            <if test="id != null">
+                and id=#{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+            <if test="age != null">
+                and age=#{age}
+            </if>
+        </where>
+    </select>
+
+</mapper>
