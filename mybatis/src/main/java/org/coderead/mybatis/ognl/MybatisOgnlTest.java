@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 描述: OGNL（Object Graph Navigation Language）
+ * 描述: OGNL（Object Graph Navigation Language）与 Mybatis 结合使用
  *
  * @author: skilled-peon <br>
  * @date: 2020/6/21 0021 <br>
  */
-public class OGNLTest {
+public class MybatisOgnlTest {
 
     private SqlSessionFactory factory;
 
