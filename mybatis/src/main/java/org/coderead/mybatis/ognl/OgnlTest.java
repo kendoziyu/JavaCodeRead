@@ -98,7 +98,7 @@ public class OgnlTest {
         object.setList(users);
 
         ExpressionEvaluator expr = new ExpressionEvaluator();
-        Iterable<?> iterable = expr.evaluateIterable("list.{? #this.age == 10}", object);
+        Iterable<?> iterable = expr.evaluateIterable("#root.{? #this.age == 10}", users);
         // 筛选年纪为 10 的
         for (Object o : iterable) {
             System.out.println(((TestUser)o).getName());
@@ -106,11 +106,12 @@ public class OgnlTest {
 
 //        ExpressionEvaluator expr2 = new ExpressionEvaluator();
 //        // 调用 TestUsers 列表中选择第一个变量
-//        System.out.println(expr2.evaluateBoolean("#var = list.{^ #this.age == 10} && var.name == \"sam\"", object));
+//        System.out.println(expr2.evaluateBoolean("#var list.{^ #this.age == 10} && var.name == \"sam\"", object));
+//        System.out.println(expr2.evaluateBoolean("var.name == \"sam\"", users));
 //
 //        ExpressionEvaluator expr3 = new ExpressionEvaluator();
 //        // 调用 TestUsers 列表中选择第一个变量
-//        System.out.println(expr3.evaluateBoolean("#var = list.{$ #this.age == 10}", object));
-//        System.out.println(expr3.evaluateBoolean("var.name == \"sam\"", users));
+//        System.out.println(expr3.evaluateBoolean("#var list.{$ #this.age == 10}", object));
+//        System.out.println(expr3.evaluateBoolean("var.name == \"bob\"", users));
     }
 }
